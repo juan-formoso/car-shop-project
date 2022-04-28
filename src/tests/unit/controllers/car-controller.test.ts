@@ -1,27 +1,38 @@
-// template para criação dos testes de cobertura da camada de controller
+import * as sinon from 'sinon';
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import server from '../../../server';
+import CarModel from '../../../models/CarModel';
+import { 
+  carRequestExample, 
+  carResponseExample, 
+  invalidRequestExample,
+} from '../mocks/car-mocks';
 
+chai.use(chaiHttp);
 
-// import * as sinon from 'sinon';
-// import chai from 'chai';
-// import chaiHttp = require('chai-http');
+const { expect } = chai;
 
+describe('Testa CarController', () => {
+  const app = server.getApp();
+  const carModel = new CarModel();
+  let response;
 
-// chai.use(chaiHttp);
+  describe('POST /cars', () => {
 
-// const { expect } = chai;
-
-// describe('Sua descrição', () => {
-
-//   before(async () => {
-//     sinon
-//       .stub()
-//       .resolves();
-//   });
-
-//   after(()=>{
-//     ().restore();
-//   })
-
-//   it('', async () => {});
-
-// });
+    before(async () => {
+      sinon
+        .stub(carModel.model, 'create')
+        .resolves(carResponseExample);
+    });
+  
+    after(() => {
+      (carModel.model.create as sinon.SinonStub).restore();
+    })
+  
+    it('Requisição realizada com sucesso', async () => {
+      response = await chai.request(app).post('/cars').send(carRequestExample);
+      expect(response.body).to.deep.equal(carResponseExample);
+    });
+  })
+});
