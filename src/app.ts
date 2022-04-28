@@ -11,10 +11,8 @@ class App {
 
   public startServer(PORT: string | number = 3001): void {
     connectToDatabase();
-    this.app.listen(
-      PORT,
-      () => console.log(`Server running here 👉 http://localhost:${PORT}`),
-    );
+    this.app.listen(PORT, () =>
+      console.log(`Server running here 👉 http://localhost:${PORT}`));
   }
 
   public addRouter(router: Router) {

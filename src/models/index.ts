@@ -8,9 +8,10 @@ export default abstract class BaseModel<T> implements IModel<T> {
 
   read = async (): Promise<T[]> => this.model.find();
 
-  readOne = async (id: string): Promise<T | null> => this.model.findOne({ 
-    _id: id,
-  });
+  readOne = async (id: string): Promise<T | null> =>
+    this.model.findOne({
+      _id: id,
+    });
 
   update = async (id: string, item: T): Promise<T | null> =>
     this.model.findOneAndUpdate({ _id: id }, { ...item });

@@ -2,9 +2,11 @@ import { Request, Response } from 'express';
 import { ZodIssue } from 'zod';
 import BaseService from '../services/index';
 
-export type ErrorResponse = {
-  error: unknown;
-} | ZodIssue[];
+export type ErrorResponse =
+  | {
+    error: unknown;
+  }
+  | ZodIssue[];
 
 export interface BodyRequest<T> extends Request {
   body: T;
@@ -25,7 +27,7 @@ export default abstract class BaseController<T> {
   constructor(protected service: BaseService<T>) {}
 
   abstract create(
-    req: BodyRequest<T>, 
+    req: BodyRequest<T>,
     res: Response<T | ErrorResponse>
   ): Promise<typeof res>;
 }
