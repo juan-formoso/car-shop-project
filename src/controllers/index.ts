@@ -3,8 +3,8 @@ import { ZodIssue } from 'zod';
 import BaseService from '../services/index';
 
 export type ErrorResponse = {
-  error: ZodIssue;
-};
+  error: unknown;
+} | ZodIssue[];
 
 export interface BodyRequest<T> extends Request {
   body: T;
@@ -18,7 +18,7 @@ enum ControllerError {
 }
 
 export default abstract class BaseController<T> {
-  protected error = ControllerError;
+  protected errors = ControllerError;
 
   abstract route: string;
 
