@@ -1,18 +1,18 @@
 export const carRequestExample = {
-  model: 'Honda Civic',
-  year: 2019,
-  color: 'red',
-  buyValue: 100000,
-  seatsQty: 4,
-  doorsQty: 4,
+   model: "Ferrari Maranello",
+   year: 1963,
+   color: "red",
+   buyValue: 3500000,
+   seatsQty: 2,
+   doorsQty: 2
 };
 
 export const carResponseExample = {
-  _id: '5e7f8f8f8f8f8f8f8f8f8f8',
-  model: 'Honda Civic',
-  year: 2019,
-  color: 'red',
-  buyValue: 100000,
-  seatsQty: 4,
-  doorsQty: 4,
+  _id: "4edd40c86762e0fb12000003",
+  model: "Ferrari Maranello",
+   year: 1963,
+   color: "red",
+   buyValue: 3500000,
+   seatsQty: 2,
+   doorsQty: 2
 };
