@@ -1,7 +1,8 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { Car } from '../interfaces/CarInterface';
+import { ServiceError } from '../services';
 import CarService from '../services/CarService';
-import BaseController, { BodyRequest, ErrorResponse } from './index';
+import BaseController from './index';
 
 export default class CarController extends BaseController<Car> {
   private _route: string;
@@ -15,20 +16,13 @@ export default class CarController extends BaseController<Car> {
     return this._route;
   }
 
-  create = async (
-    req: BodyRequest<Car>, 
-    res: Response<Car | ErrorResponse>,
-  ): Promise<typeof res> => {
+  create = async (req: Request, res: Response): Promise<typeof res> => {
     const { body } = req;
     try {
       const car = await this.service.create(body);
-      if (!car) {
-        return res.status(500).json({ 
-          error: this.errors.INTERNAL_SERVER_ERROR,
-        });
-      }
-      if ('error' in car) {
-        return res.status(400).json(car.error.issues);
+      // o if abaixo foi utilizado baseado no repositório de "Adilson Gabriel" > https://github.com/adilsongb
+      if ((car as ServiceError).error) {
+        return res.status(400).json({ error: (car as ServiceError).error });
       }
       return res.status(201).json(car);
     } catch (error) {
