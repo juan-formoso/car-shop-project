@@ -1,6 +1,3 @@
-// Escreva testes que cubram, pelo menos, 15% da camada Model.
-// Será validado que cobertura total das linhas dos arquivos na pasta models é maior ou igual a 15%;
-
 import { expect } from 'chai';
 import mongoose from 'mongoose';
 import sinon from 'sinon';
