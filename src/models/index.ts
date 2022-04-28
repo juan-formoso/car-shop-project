@@ -2,7 +2,7 @@ import { Model, Document } from 'mongoose';
 import { Model as IModel } from '../interfaces/ModelInterface';
 
 export default abstract class BaseModel<T> implements IModel<T> {
-  constructor(protected model: Model<T & Document>) {}
+  constructor(public model: Model<T & Document>) {}
 
   create = async (item: T): Promise<T> => this.model.create({ ...item });
 
