@@ -30,4 +30,16 @@ export default abstract class BaseController<T> {
     req: BodyRequest<T>,
     res: Response<T | ErrorResponse>
   ): Promise<typeof res>;
+
+  read = async (
+    _req: Request, 
+    res: Response<T[] | ErrorResponse>,
+  ): Promise<typeof res> => {
+    try {
+      const items = await this.service.read();
+      return res.status(200).json(items);
+    } catch (error) {
+      return res.status(500).json({ error: this.errors.INTERNAL_SERVER_ERROR });
+    }
+  };
 }
