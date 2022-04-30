@@ -3,7 +3,7 @@ import chai from "chai";
 import chaiHttp from "chai-http";
 import server from "../../../server";
 import CarModel from "../../../models/CarModel";
-import { carRequestExample, carResponseExample } from "../mocks/car-mocks";
+import { carRequestExample, carResponseExample, readMethodResponse, CarDocType } from "../mocks/car-mocks";
 
 chai.use(chaiHttp);
 
@@ -26,6 +26,21 @@ describe("Testa CarController", () => {
     it("Requisição realizada com sucesso", async () => {
       response = await chai.request(app).post("/cars").send(carRequestExample);
       expect(response.body).to.deep.equal(carResponseExample);
+    });
+  });
+
+  describe("GET /cars", () => {
+    before(async () => {
+      sinon.stub(carModel.model, "find").resolves(readMethodResponse as CarDocType[]);
+    });
+
+    after(() => {
+      (carModel.model.find as sinon.SinonStub).restore();
+    });
+
+    it("Requisição realizada com sucesso", async () => {
+      response = await chai.request(app).get("/cars");
+      expect(response.body).to.deep.equal(readMethodResponse);
     });
   });
 });
